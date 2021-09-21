@@ -13,10 +13,11 @@ namespace Todo
     public partial class InputDialog : Form
     {
         public string text;
-        public InputDialog()
+        public InputDialog(string title = "")
         {
             InitializeComponent();
             StartPosition = FormStartPosition.CenterParent;
+            this.Text = title;
         }
 
         public InputDialog SetSingleLine()

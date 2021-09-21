@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Todo
@@ -6,9 +7,13 @@ namespace Todo
     public partial class mainForm : Form
     {
         private string lastPage;
+        private bool isDragging = false;
+        private Point startPoint;
+
         public mainForm()
         {
             InitializeComponent();
+
             this.checkedListBox.CheckOnClick = true;
             this.pageSelectBox.SelectedItem = lastPage = "默认";
             LoadFromFile("默认.dat");
@@ -60,7 +65,7 @@ namespace Todo
         //
         private void addButton_Click(object sender, EventArgs e)
         {
-            InputDialog inputDialog = new InputDialog();
+            InputDialog inputDialog = new InputDialog("请输入TODO名称");
             inputDialog.ShowDialog();
 
             if (inputDialog.DialogResult == DialogResult.OK)
@@ -108,7 +113,7 @@ namespace Todo
             string temp = this.pageSelectBox.SelectedItem as string;
             if (temp == "添加新页面")
             {
-                InputDialog dialog = new InputDialog();
+                InputDialog dialog = new InputDialog("请输入新页面名称");
                 dialog.SetSingleLine();
                 dialog.Height = (int)(dialog.Height * 0.4);
                 dialog.ShowDialog();
@@ -122,10 +127,17 @@ namespace Todo
                         this.pageSelectBox.SelectedItem = name;
                     }
                 }
+                else
+                {
+                    this.pageSelectBox.SelectedItem = "默认";
+                }
             }
             else
             {
-                this.SaveToFile(lastPage + ".dat");
+                if (lastPage != "添加新页面")
+                {
+                    this.SaveToFile(lastPage + ".dat");
+                }
                 this.LoadFromFile(temp + ".dat");
                 lastPage = temp;
             }
@@ -142,14 +154,14 @@ namespace Todo
         {
             ToolTip toolTip = new ToolTip();
 
-            toolTip.SetToolTip(this.removePageButton, "删除此条TODO");
+            toolTip.SetToolTip(this.removeButton, "删除此条TODO");
         }
 
         private void addButton_MouseHover(object sender, EventArgs e)
         {
             ToolTip toolTip = new ToolTip();
 
-            toolTip.SetToolTip(this.removePageButton, "添加新TODO");
+            toolTip.SetToolTip(this.addButton, "添加新TODO");
         }
 
         private void removePageButton_Click(object sender, EventArgs e)
@@ -160,6 +172,39 @@ namespace Todo
             this.pageSelectBox.Items.Remove(toBeDel);
             this.pageSelectBox.SelectedItem = "默认";
             System.IO.File.Delete("./data/" + toBeDel + ".dat");
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void titlePanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                startPoint = new Point(e.X, e.Y);
+            }
+        }
+
+        private void titlePanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Point offset = new Point(e.X - startPoint.X, e.Y - startPoint.Y);
+                Location = PointToScreen(offset);
+            }
+        }
+
+        private void titlePanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDragging = false;
+        }
+
+        private void topScreenCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.TopMost = this.topScreenCheckBox.Checked;
         }
     }
 }
