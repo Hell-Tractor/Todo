@@ -9,10 +9,12 @@ namespace Todo
         private string lastPage;
         private bool isDragging = false;
         private Point startPoint;
+        private bool enablePageChange = false;
 
         public mainForm()
         {
             InitializeComponent();
+            this.enablePageChange = false;
 
             this.checkedListBox.CheckOnClick = true;
             this.pageSelectBox.SelectedItem = lastPage = "默认";
@@ -28,6 +30,7 @@ namespace Todo
                 }
             }
             this.pageSelectBox.Items.Add("添加新页面");
+            this.enablePageChange = true;
         }
 
         private void SaveToFile(string filename)
@@ -70,7 +73,7 @@ namespace Todo
 
             if (inputDialog.DialogResult == DialogResult.OK)
             {   
-                foreach (string i in inputDialog.text.Trim().Split('\n'))
+                foreach (string i in inputDialog.text.Split('\n'))
                 {
                     string temp = i.Trim();
                     if (temp != "" && !this.checkedListBox.Items.Contains(temp))
@@ -110,6 +113,10 @@ namespace Todo
 
         private void pageSelectBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!enablePageChange)
+            {
+                return;
+            }
             string temp = this.pageSelectBox.SelectedItem as string;
             if (temp == "添加新页面")
             {
@@ -124,12 +131,20 @@ namespace Todo
                     if (name != "" && !this.pageSelectBox.Items.Contains(name))
                     {
                         this.pageSelectBox.Items.Insert(this.pageSelectBox.Items.Count - 1, name);
+                        this.enablePageChange = false;
                         this.pageSelectBox.SelectedItem = name;
+                        this.SaveToFile(lastPage + ".dat");
+                        this.LoadFromFile(name + ".dat");
+                        lastPage = name;
+                        this.enablePageChange = true;
                     }
                 }
                 else
                 {
-                    this.pageSelectBox.SelectedItem = "默认";
+                    this.enablePageChange = false;
+                    this.pageSelectBox.SelectedItem = lastPage;
+                    this.LoadFromFile(lastPage + ".dat");
+                    this.enablePageChange = true;
                 }
             }
             else

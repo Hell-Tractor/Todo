@@ -32,12 +32,12 @@ namespace Todo
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.addButton = new System.Windows.Forms.Button();
             this.removeButton = new System.Windows.Forms.Button();
-            this.checkedListBox = new System.Windows.Forms.CheckedListBox();
             this.pageSelectBox = new System.Windows.Forms.ComboBox();
             this.removePageButton = new System.Windows.Forms.Button();
             this.titlePanel = new System.Windows.Forms.Panel();
             this.topScreenCheckBox = new System.Windows.Forms.CheckBox();
             this.closeButton = new System.Windows.Forms.Button();
+            this.checkedListBox = new Todo.TodoListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
@@ -52,10 +52,10 @@ namespace Todo
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel1.Controls.Add(this.addButton, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.removeButton, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.checkedListBox, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.pageSelectBox, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.removePageButton, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.titlePanel, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.checkedListBox, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -90,16 +90,6 @@ namespace Todo
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
             this.removeButton.MouseHover += new System.EventHandler(this.removeButton_MouseHover);
-            // 
-            // checkedListBox
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.checkedListBox, 4);
-            this.checkedListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBox.FormattingEnabled = true;
-            this.checkedListBox.Location = new System.Drawing.Point(3, 75);
-            this.checkedListBox.Name = "checkedListBox";
-            this.checkedListBox.Size = new System.Drawing.Size(285, 364);
-            this.checkedListBox.TabIndex = 2;
             // 
             // pageSelectBox
             // 
@@ -171,6 +161,16 @@ namespace Todo
             this.closeButton.UseVisualStyleBackColor = false;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
+            // checkedListBox
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.checkedListBox, 4);
+            this.checkedListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBox.FormattingEnabled = true;
+            this.checkedListBox.Location = new System.Drawing.Point(3, 75);
+            this.checkedListBox.Name = "checkedListBox";
+            this.checkedListBox.Size = new System.Drawing.Size(285, 364);
+            this.checkedListBox.TabIndex = 6;
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -197,12 +197,12 @@ namespace Todo
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button removeButton;
-        private System.Windows.Forms.CheckedListBox checkedListBox;
         private System.Windows.Forms.ComboBox pageSelectBox;
         private System.Windows.Forms.Button removePageButton;
         private System.Windows.Forms.Panel titlePanel;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.CheckBox topScreenCheckBox;
+        private TodoListBox checkedListBox;
     }
 }
 

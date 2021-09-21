@@ -28,12 +28,14 @@ namespace Todo
 
         private void acceptButton_Click(object sender, EventArgs e)
         {
-            text = this.inputBox.Text;
+            this.DialogResult = DialogResult.OK;
+            text = this.inputBox.Text.Trim();
             this.Close();
         }
 
         private void rejectButton_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
@@ -41,6 +43,7 @@ namespace Todo
         {
             if (e.Shift && e.KeyCode == Keys.Enter)
             {
+                text = this.inputBox.Text.Trim();
                 this.acceptButton_Click(sender, e);
             }
         }
