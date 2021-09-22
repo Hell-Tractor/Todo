@@ -8,7 +8,7 @@ namespace Todo
     {
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
-            if (e.Index < 0)
+            if (e.Index < 0 || e.Index >= this.Items.Count)
                 return;
 
             // close back color changing

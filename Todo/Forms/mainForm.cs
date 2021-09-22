@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Windows.Forms.ComboBox;
 
 namespace Todo
 {
@@ -10,7 +11,7 @@ namespace Todo
         private bool isDragging = false;
         private Point startPoint;
         private bool enablePageChange = false;
-        private string DEFAULT_PAGE = SettingsManager.GetInstance().Get("default.page");
+        private readonly string DEFAULT_PAGE = SettingsManager.GetInstance().Get("default.page");
 
         public mainForm()
         {
@@ -23,11 +24,12 @@ namespace Todo
             windowPosition.Y = int.Parse(SettingsManager.GetInstance().Get("window.position.y"));
             this.Location = windowPosition;
 
-            this.enablePageChange = false;
+            // Resize window
+            this.Size = new Size(int.Parse(SettingsManager.GetInstance().Get("window.size.width")),
+                int.Parse(SettingsManager.GetInstance().Get("window.size.height")));
 
-            // load default page
-            this.pageSelectBox.SelectedItem = lastPage = DEFAULT_PAGE;
-            LoadFromFile(DEFAULT_PAGE + ".dat");
+            // disable page change event
+            this.enablePageChange = false;
 
             // load all pages
             System.IO.DirectoryInfo info = new System.IO.DirectoryInfo("./data");
@@ -39,6 +41,11 @@ namespace Todo
                     this.pageSelectBox.Items.Add(pageName);
                 }
             }
+
+            // load default page
+            this.pageSelectBox.SelectedItem = lastPage = DEFAULT_PAGE;
+            LoadFromFile(DEFAULT_PAGE + ".dat");
+
             this.pageSelectBox.Items.Add("添加新页面");
 
             this.enablePageChange = true;
@@ -50,7 +57,7 @@ namespace Todo
             {
                 for (int i = 0; i < this.checkedListBox.Items.Count; ++i)
                 {
-                    writer.WriteLine(this.checkedListBox.GetItemChecked(i).ToString() + " " + 
+                    writer.WriteLine(this.checkedListBox.GetItemChecked(i).ToString() + " " +
                         this.checkedListBox.Items[i]);
                 }
             }
@@ -83,7 +90,7 @@ namespace Todo
             inputDialog.ShowDialog();
 
             if (inputDialog.DialogResult == DialogResult.OK)
-            {   
+            {
                 foreach (string i in inputDialog.text.Split('\n'))
                 {
                     string temp = i.Trim();
@@ -198,7 +205,7 @@ namespace Todo
 
         private void removePageButton_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确认删除？", "确认", MessageBoxButtons.OKCancel, MessageBoxIcon.None, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+            if (MessageBox.Show(this, "确认删除？", "确认", MessageBoxButtons.OKCancel, MessageBoxIcon.None, MessageBoxDefaultButton.Button2) == DialogResult.OK)
             {
                 string toBeDel = this.pageSelectBox.Text;
                 if (toBeDel == "默认" || toBeDel == "添加新页面")
@@ -240,6 +247,17 @@ namespace Todo
         private void topScreenCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             this.TopMost = this.topScreenCheckBox.Checked;
+        }
+
+        private void settingButton_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new(this);
+            settingsForm.ShowDialog();
+        }
+
+        public ObjectCollection GetPages()
+        {
+            return this.pageSelectBox.Items;
         }
     }
 }

@@ -35,6 +35,7 @@ namespace Todo
             this.pageSelectBox = new System.Windows.Forms.ComboBox();
             this.removePageButton = new System.Windows.Forms.Button();
             this.titlePanel = new System.Windows.Forms.Panel();
+            this.settingButton = new System.Windows.Forms.Button();
             this.topScreenCheckBox = new System.Windows.Forms.CheckBox();
             this.closeButton = new System.Windows.Forms.Button();
             this.checkedListBox = new Todo.TodoListBox();
@@ -119,6 +120,7 @@ namespace Todo
             // 
             this.titlePanel.BackColor = System.Drawing.Color.Gainsboro;
             this.tableLayoutPanel1.SetColumnSpan(this.titlePanel, 4);
+            this.titlePanel.Controls.Add(this.settingButton);
             this.titlePanel.Controls.Add(this.topScreenCheckBox);
             this.titlePanel.Controls.Add(this.closeButton);
             this.titlePanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -130,15 +132,28 @@ namespace Todo
             this.titlePanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.titlePanel_MouseMove);
             this.titlePanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.titlePanel_MouseUp);
             // 
+            // settingButton
+            // 
+            this.settingButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.settingButton.FlatAppearance.BorderSize = 0;
+            this.settingButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.settingButton.Location = new System.Drawing.Point(34, 0);
+            this.settingButton.Name = "settingButton";
+            this.settingButton.Size = new System.Drawing.Size(40, 34);
+            this.settingButton.TabIndex = 2;
+            this.settingButton.Text = "⚙";
+            this.settingButton.UseVisualStyleBackColor = true;
+            this.settingButton.Click += new System.EventHandler(this.settingButton_Click);
+            // 
             // topScreenCheckBox
             // 
             this.topScreenCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.topScreenCheckBox.BackgroundImage = global::Todo.Properties.Resources.topScreenCheckBox;
             this.topScreenCheckBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.topScreenCheckBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.topScreenCheckBox.FlatAppearance.BorderSize = 0;
             this.topScreenCheckBox.FlatAppearance.CheckedBackColor = System.Drawing.Color.Silver;
             this.topScreenCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.topScreenCheckBox.Image = global::Todo.Properties.Resources.topScreenCheckBox;
             this.topScreenCheckBox.Location = new System.Drawing.Point(0, 0);
             this.topScreenCheckBox.Name = "topScreenCheckBox";
             this.topScreenCheckBox.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
@@ -204,6 +219,7 @@ namespace Todo
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.CheckBox topScreenCheckBox;
         private TodoListBox checkedListBox;
+        private System.Windows.Forms.Button settingButton;
     }
 }
 
