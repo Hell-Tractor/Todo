@@ -10,16 +10,26 @@ namespace Todo
         private bool isDragging = false;
         private Point startPoint;
         private bool enablePageChange = false;
+        private string DEFAULT_PAGE = SettingsManager.GetInstance().Get("default.page");
 
         public mainForm()
         {
             InitializeComponent();
+            this.checkedListBox.CheckOnClick = true;
+
+            // load last window position
+            Point windowPosition = new Point();
+            windowPosition.X = int.Parse(SettingsManager.GetInstance().Get("window.position.x"));
+            windowPosition.Y = int.Parse(SettingsManager.GetInstance().Get("window.position.y"));
+            this.Location = windowPosition;
+
             this.enablePageChange = false;
 
-            this.checkedListBox.CheckOnClick = true;
-            this.pageSelectBox.SelectedItem = lastPage = "默认";
-            LoadFromFile("默认.dat");
+            // load default page
+            this.pageSelectBox.SelectedItem = lastPage = DEFAULT_PAGE;
+            LoadFromFile(DEFAULT_PAGE + ".dat");
 
+            // load all pages
             System.IO.DirectoryInfo info = new System.IO.DirectoryInfo("./data");
             foreach (var temp in info.GetFiles("*.dat"))
             {
@@ -30,6 +40,7 @@ namespace Todo
                 }
             }
             this.pageSelectBox.Items.Add("添加新页面");
+
             this.enablePageChange = true;
         }
 
@@ -109,6 +120,12 @@ namespace Todo
         private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveToFile((this.pageSelectBox.SelectedItem as string) + ".dat");
+
+            // save window position
+            SettingsManager.GetInstance().Set("window.position.x", this.Location.X.ToString())
+                .Set("window.position.y", this.Location.Y.ToString())
+            // save all settings
+                .Save();
         }
 
         private void pageSelectBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -185,7 +202,7 @@ namespace Todo
             if (toBeDel == "默认" || toBeDel == "添加新页面")
                 return;
             this.pageSelectBox.Items.Remove(toBeDel);
-            this.pageSelectBox.SelectedItem = "默认";
+            this.pageSelectBox.SelectedItem = lastPage;
             System.IO.File.Delete("./data/" + toBeDel + ".dat");
         }
 
