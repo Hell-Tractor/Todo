@@ -20,6 +20,9 @@ namespace Todo
             InitializeComponent();
 
             form = sender as mainForm;
+
+            this.TopMost = form.TopMost;
+
             foreach (object i in form.GetPages())
             {
                 if (i.ToString() != "添加新页面")

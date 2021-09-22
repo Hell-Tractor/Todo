@@ -13,9 +13,12 @@ namespace Todo
     public partial class InputDialog : Form
     {
         public string text;
-        public InputDialog(string title = "")
+        public InputDialog(object sender, string title = "")
         {
             InitializeComponent();
+
+            this.TopMost = (sender as Form).TopMost;
+
             StartPosition = FormStartPosition.CenterParent;
             this.Text = title;
         }

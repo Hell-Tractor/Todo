@@ -86,7 +86,7 @@ namespace Todo
         //
         private void addButton_Click(object sender, EventArgs e)
         {
-            InputDialog inputDialog = new InputDialog("请输入TODO名称");
+            InputDialog inputDialog = new InputDialog(this, "请输入TODO名称");
             inputDialog.ShowDialog();
 
             if (inputDialog.DialogResult == DialogResult.OK)
@@ -144,7 +144,7 @@ namespace Todo
             string temp = this.pageSelectBox.SelectedItem as string;
             if (temp == "添加新页面")
             {
-                InputDialog dialog = new InputDialog("请输入新页面名称");
+                InputDialog dialog = new InputDialog(this, "请输入新页面名称");
                 dialog.SetSingleLine();
                 dialog.Height = (int)(dialog.Height * 0.4);
                 dialog.ShowDialog();
