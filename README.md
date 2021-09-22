@@ -1,6 +1,6 @@
 ﻿# Todo
 
-This is a program made with C# which is used for making todo lists.
+This is a program made with C# which is used for making to-do lists.
 
 ## Usage
 
