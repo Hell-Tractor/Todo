@@ -12,25 +12,23 @@ namespace Todo
                 return;
 
             // close back color changing
-            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-            {
-                e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected);
-            }
-            e.DrawBackground();
+            e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State, e.ForeColor, BackColor);
+            e.Graphics.FillRectangle(new System.Drawing.SolidBrush(BackColor), e.Bounds);
             this.drawItem(e, this.CheckedIndices.Contains(e.Index));
         }
 
         private TodoListBox drawItem(DrawItemEventArgs e, bool check)
         {
-            System.Drawing.Font font;
+            System.Drawing.FontStyle fontStyle = System.Drawing.FontStyle.Regular;
             if (check)
             {
-                font = new System.Drawing.Font(e.Font.Name, e.Font.Size, System.Drawing.FontStyle.Strikeout);
+                fontStyle |= System.Drawing.FontStyle.Strikeout;
             }
-            else
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
-                font = new System.Drawing.Font(e.Font.Name, e.Font.Size);
+                fontStyle |= System.Drawing.FontStyle.Underline;
             }
+            System.Drawing.Font font = new System.Drawing.Font(e.Font.Name, e.Font.Size, fontStyle);
             var checkBoxSize = CheckBoxRenderer.GetGlyphSize(e.Graphics, System.Windows.Forms.VisualStyles.CheckBoxState.CheckedNormal);
             int paddingDistance = (e.Bounds.Height - checkBoxSize.Height) / 2;
             CheckBoxRenderer.DrawCheckBox(e.Graphics,

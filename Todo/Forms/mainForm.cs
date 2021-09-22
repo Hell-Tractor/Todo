@@ -198,12 +198,15 @@ namespace Todo
 
         private void removePageButton_Click(object sender, EventArgs e)
         {
-            string toBeDel = this.pageSelectBox.Text;
-            if (toBeDel == "默认" || toBeDel == "添加新页面")
-                return;
-            this.pageSelectBox.Items.Remove(toBeDel);
-            this.pageSelectBox.SelectedItem = lastPage;
-            System.IO.File.Delete("./data/" + toBeDel + ".dat");
+            if (MessageBox.Show("确认删除？", "确认", MessageBoxButtons.OKCancel, MessageBoxIcon.None, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+            {
+                string toBeDel = this.pageSelectBox.Text;
+                if (toBeDel == "默认" || toBeDel == "添加新页面")
+                    return;
+                this.pageSelectBox.Items.Remove(toBeDel);
+                this.pageSelectBox.SelectedItem = DEFAULT_PAGE;
+                System.IO.File.Delete("./data/" + toBeDel + ".dat");
+            }
         }
 
         private void closeButton_Click(object sender, EventArgs e)
