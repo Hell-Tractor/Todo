@@ -16,7 +16,6 @@ namespace Todo
         public mainForm()
         {
             InitializeComponent();
-            this.checkedListBox.CheckOnClick = true;
 
             // load last window position
             Point windowPosition = new Point();
@@ -77,7 +76,7 @@ namespace Todo
                 {
                     string[] temp = line.Split();
                     bool state = temp[0] == "True";
-                    this.checkedListBox.Items.Add(temp[1], state);
+                    this.checkedListBox.AddItem(temp[1], state);
                 }
             }
         }
@@ -96,7 +95,7 @@ namespace Todo
                     string temp = i.Trim();
                     if (temp != "" && !this.checkedListBox.Items.Contains(temp))
                     {
-                        this.checkedListBox.Items.Add(temp);
+                        this.checkedListBox.AddItem(temp);
                     }
                 }
             }
@@ -121,7 +120,7 @@ namespace Todo
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-            this.checkedListBox.Items.Remove(this.checkedListBox.SelectedItem);
+            this.checkedListBox.RemoveItem(this.checkedListBox.SelectedItem);
         }
 
         private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -259,5 +258,29 @@ namespace Todo
         {
             return this.pageSelectBox.Items;
         }
+
+        #region MOUSE_CLICK
+        private int clickedIndex = -1;
+        private void checkedListBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            clickedIndex = -1;
+            if (e.Button == MouseButtons.Left)
+            {
+                clickedIndex = this.checkedListBox.IndexFromPoint(e.Location);
+                if (!this.checkedListBox.GetCheckBoxRect(clickedIndex).Contains(e.Location))
+                {
+                    clickedIndex = -1;
+                }
+            }
+
+            if (clickedIndex != -1)
+            {
+                this.checkedListBox.ChangeItemChecked(clickedIndex);
+            }
+        }
+
+
+
+        #endregion
     }
 }

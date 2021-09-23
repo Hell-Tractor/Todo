@@ -180,11 +180,14 @@ namespace Todo
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.checkedListBox, 4);
             this.checkedListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.checkedListBox.FormattingEnabled = true;
+            this.checkedListBox.ItemHeight = 20;
             this.checkedListBox.Location = new System.Drawing.Point(3, 75);
             this.checkedListBox.Name = "checkedListBox";
             this.checkedListBox.Size = new System.Drawing.Size(285, 364);
             this.checkedListBox.TabIndex = 6;
+            this.checkedListBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.checkedListBox_MouseClick);
             // 
             // mainForm
             // 
@@ -218,8 +221,8 @@ namespace Todo
         private System.Windows.Forms.Panel titlePanel;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.CheckBox topScreenCheckBox;
-        private TodoListBox checkedListBox;
         private System.Windows.Forms.Button settingButton;
+        private TodoListBox checkedListBox;
     }
 }
 
