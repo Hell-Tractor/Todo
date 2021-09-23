@@ -148,7 +148,7 @@ namespace Todo
                 TextFormatFlags.WordBreak);
 
             // draw debug bounds
-            e.Graphics.DrawRectangle(Pens.Blue, e.Bounds);
+            //e.Graphics.DrawRectangle(Pens.Blue, e.Bounds);
         }
 
         protected override void RefreshItem(int index)

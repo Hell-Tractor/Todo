@@ -27,6 +27,9 @@ namespace Todo
             this.Size = new Size(int.Parse(SettingsManager.GetInstance().Get("window.size.width")),
                 int.Parse(SettingsManager.GetInstance().Get("window.size.height")));
 
+            // load window opacity
+            this.Opacity = double.Parse(SettingsManager.GetInstance().Get("window.opacity"));
+
             // disable page change event
             this.enablePageChange = false;
 
