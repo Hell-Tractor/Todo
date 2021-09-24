@@ -5,29 +5,46 @@ using System.Drawing;
 
 namespace Todo
 {
+    public class TodoItem
+    {
+        public string content;
+        public Rectangle checkBoxRect = new();
+        public bool isChecked;
+
+        public TodoItem()
+        {
+            content = "";
+            isChecked = false;
+        }
+
+        public TodoItem(string str, bool state)
+        {
+            content = str;
+            isChecked = state;
+        }
+
+        public override string ToString()
+        {
+            return content;
+        }
+    }
     public class TodoListBox : ListBox
     {
-        protected List<bool> isChecked = new();
-        protected List<Rectangle> checkBoxRect = new();
-
         public TodoListBox()
         {
             this.DrawMode = DrawMode.OwnerDrawVariable;
         }
 
-        public TodoListBox AddItem(object obj, bool state = false)
+        public TodoListBox AddItem(string obj, bool state = false)
         {
-            this.Items.Add(obj);
-            this.isChecked.Add(state);
-            this.checkBoxRect.Add(new Rectangle());
+            //System.Diagnostics.Debug.WriteLine("{0}: {1}", obj, state.ToString());
+            this.Items.Add(new TodoItem(obj, state));
             return this;
         }
 
         public TodoListBox RemoveItemAt(int index)
         {
-            isChecked.RemoveAt(index);
             this.Items.RemoveAt(index);
-            this.checkBoxRect.RemoveAt(index);
             return this;
         }
         public TodoListBox RemoveItem(object obj)
@@ -42,26 +59,26 @@ namespace Todo
 
         public bool GetItemChecked(int index)
         {
-            return this.isChecked[index];
+            return (this.Items[index] as TodoItem).isChecked;
         }
 
         public TodoListBox SetItemChecked(int index, bool state)
         {
-            this.isChecked[index] = state;
+            (this.Items[index] as TodoItem).isChecked = state;
             this.RefreshItem(index);
             return this;
         }
 
         public TodoListBox ChangeItemChecked(int index)
         {
-            this.isChecked[index] = !this.isChecked[index];
+            (this.Items[index] as TodoItem).isChecked = !(this.Items[index] as TodoItem).isChecked;
             this.RefreshItem(index);
             return this;
         }
 
         public Rectangle GetCheckBoxRect(int index)
         {
-            return checkBoxRect[index];
+            return (Items[index] as TodoItem).checkBoxRect;
         }
 
         protected override void OnMeasureItem(MeasureItemEventArgs e)
@@ -92,7 +109,7 @@ namespace Todo
                 return;
 
             FontStyle fontStyle = FontStyle.Regular;
-            bool isChecked = this.isChecked[e.Index];
+            bool isChecked = (this.Items[e.Index] as TodoItem).isChecked;
             if (isChecked)
             {
                 fontStyle |= FontStyle.Strikeout;
@@ -130,7 +147,7 @@ namespace Todo
                 new Point(e.Bounds.Left + 1, e.Bounds.Top + verticalPadding),
                 isChecked ? System.Windows.Forms.VisualStyles.CheckBoxState.CheckedNormal :
                     System.Windows.Forms.VisualStyles.CheckBoxState.UncheckedNormal);
-            this.checkBoxRect[e.Index] = new Rectangle(e.Bounds.Left + 1,
+            (this.Items[e.Index] as TodoItem).checkBoxRect = new Rectangle(e.Bounds.Left + 1,
                 e.Bounds.Top + verticalPadding,
                 checkBoxSize.Width,
                 checkBoxSize.Height);
@@ -164,7 +181,7 @@ namespace Todo
 
             // calculate Item State
             DrawItemState state = DrawItemState.None;
-            if (this.isChecked[index])
+            if ((this.Items[index] as TodoItem).isChecked)
             {
                 state |= DrawItemState.Checked;
             }

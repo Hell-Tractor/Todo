@@ -60,7 +60,7 @@ namespace Todo
                 for (int i = 0; i < this.checkedListBox.Items.Count; ++i)
                 {
                     writer.WriteLine(this.checkedListBox.GetItemChecked(i).ToString() + " " +
-                        this.checkedListBox.Items[i]);
+                        this.checkedListBox.Items[i].ToString());
                 }
             }
         }
