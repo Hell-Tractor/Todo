@@ -11,7 +11,7 @@ namespace Todo
         private bool isDragging = false;
         private Point startPoint;
         private bool enablePageChange = false;
-        private readonly string DEFAULT_PAGE = SettingsManager.GetInstance().Get("default.page");
+        public string DEFAULT_PAGE = SettingsManager.GetInstance().Get("default.page");
 
         public mainForm()
         {
@@ -213,6 +213,10 @@ namespace Todo
                 if (toBeDel == "默认" || toBeDel == "添加新页面")
                     return;
                 this.pageSelectBox.Items.Remove(toBeDel);
+                if (toBeDel == DEFAULT_PAGE)
+                {
+                    SettingsManager.GetInstance().Set("default.page", DEFAULT_PAGE = "默认");
+                }
                 this.pageSelectBox.SelectedItem = DEFAULT_PAGE;
                 System.IO.File.Delete("./data/" + toBeDel + ".dat");
             }

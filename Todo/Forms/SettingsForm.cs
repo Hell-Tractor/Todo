@@ -65,8 +65,9 @@ namespace Todo
             form.Size = new Size((int)this.sizeSelectBoxWidth.Value,
                 (int)this.sizeSelectBoxHeight.Value);
             form.Opacity = this.alphaTrackBar.Value / 100.0;
+            form.DEFAULT_PAGE = this.defaultPageSelectBox.SelectedItem.ToString();
 
-            SettingsManager.GetInstance().Set("default.page", this.defaultPageSelectBox.SelectedItem.ToString())
+            SettingsManager.GetInstance().Set("default.page", form.DEFAULT_PAGE)
                 .Set("window.size.width", form.Size.Width.ToString())
                 .Set("window.size.height", form.Size.Height.ToString())
                 .Set("window.opacity", form.Opacity.ToString());
