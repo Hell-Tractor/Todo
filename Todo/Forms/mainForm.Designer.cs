@@ -186,6 +186,7 @@ namespace Todo
             this.checkedListBox.ItemHeight = 20;
             this.checkedListBox.Location = new System.Drawing.Point(3, 75);
             this.checkedListBox.Name = "checkedListBox";
+            this.checkedListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.checkedListBox.Size = new System.Drawing.Size(285, 364);
             this.checkedListBox.TabIndex = 6;
             this.checkedListBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.checkedListBox_MouseClick);

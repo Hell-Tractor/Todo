@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using static System.Windows.Forms.ComboBox;
@@ -123,7 +124,15 @@ namespace Todo
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-            this.checkedListBox.RemoveItem(this.checkedListBox.SelectedItem);
+            List<object> toBeRemove = new();
+            foreach (object item in this.checkedListBox.SelectedItems)
+            {
+                toBeRemove.Add(item);
+            }
+            foreach (object item in toBeRemove)
+            {
+                this.checkedListBox.RemoveItem(item);
+            }
         }
 
         private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
