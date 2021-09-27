@@ -286,6 +286,10 @@ namespace Todo
                 {
                     clickedBox = this.checkedListBox.GetCheckBoxRect(clickedIndex).Contains(e.Location);
                 }
+                else
+                {
+                    clickedIndex = -1;
+                }
             }
 
             if (clickedIndex != -1 && clickedBox)
@@ -303,6 +307,10 @@ namespace Todo
                 if (clickedIndex >= 0 && clickedIndex < this.checkedListBox.Items.Count)
                 {
                     clickedBox = this.checkedListBox.GetCheckBoxRect(clickedIndex).Contains(e.Location);
+                }
+                else
+                {
+                    clickedIndex = -1;
                 }
             }
 
