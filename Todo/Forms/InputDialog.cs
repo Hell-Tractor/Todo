@@ -19,6 +19,13 @@ namespace Todo
         public InputDialog SetSingleLine()
         {
             this.inputBox.Multiline = false;
+            this.Height = (int)(this.Height * 0.4);
+            return this;
+        }
+
+        public InputDialog SetText(string text)
+        {
+            this.inputBox.Text = text;
             return this;
         }
 

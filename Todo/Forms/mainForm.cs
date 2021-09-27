@@ -157,7 +157,6 @@ namespace Todo
             {
                 InputDialog dialog = new InputDialog(this, "请输入新页面名称");
                 dialog.SetSingleLine();
-                dialog.Height = (int)(dialog.Height * 0.4);
                 dialog.ShowDialog();
 
                 if (dialog.DialogResult == DialogResult.OK)
@@ -276,27 +275,43 @@ namespace Todo
         }
 
         #region MOUSE_CLICK
-        private int clickedIndex = -1;
         private void checkedListBox_MouseClick(object sender, MouseEventArgs e)
         {
-            clickedIndex = -1;
+            int clickedIndex = -1;
+            bool clickedBox = false;
             if (e.Button == MouseButtons.Left)
             {
                 clickedIndex = this.checkedListBox.IndexFromPoint(e.Location);
-                if (!this.checkedListBox.GetCheckBoxRect(clickedIndex).Contains(e.Location))
-                {
-                    clickedIndex = -1;
-                }
+                clickedBox = this.checkedListBox.GetCheckBoxRect(clickedIndex).Contains(e.Location);
             }
 
-            if (clickedIndex != -1)
+            if (clickedIndex != -1 && clickedBox)
             {
                 this.checkedListBox.ChangeItemChecked(clickedIndex);
             }
         }
+        private void checkedListBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int clickedIndex = -1;
+            bool clickedBox = false;
+            if (e.Button == MouseButtons.Left)
+            {
+                clickedIndex = this.checkedListBox.IndexFromPoint(e.Location);
+                clickedBox = this.checkedListBox.GetCheckBoxRect(clickedIndex).Contains(e.Location);
+            }
 
-
+            if (clickedIndex != -1 && !clickedBox)
+            {
+                InputDialog inputDialog = new(this, "请修改任务");
+                inputDialog.SetSingleLine().SetText(this.checkedListBox.Items[clickedIndex].ToString());
+                if (inputDialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.checkedListBox.ModifyItemAt(clickedIndex, inputDialog.text);
+                }
+            }
+        }
 
         #endregion
+
     }
 }

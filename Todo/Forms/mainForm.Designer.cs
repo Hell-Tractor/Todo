@@ -190,6 +190,7 @@ namespace Todo
             this.checkedListBox.Size = new System.Drawing.Size(285, 364);
             this.checkedListBox.TabIndex = 6;
             this.checkedListBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.checkedListBox_MouseClick);
+            this.checkedListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.checkedListBox_MouseDoubleClick);
             // 
             // mainForm
             // 

@@ -47,6 +47,7 @@ namespace Todo
             this.Items.RemoveAt(index);
             return this;
         }
+        
         public TodoListBox RemoveItem(object obj)
         {
             if (obj == null)
@@ -55,6 +56,13 @@ namespace Todo
             }
             int index = this.Items.IndexOf(obj);
             return this.RemoveItemAt(index);
+        }
+
+        public TodoListBox ModifyItemAt(int index, string text)
+        {
+            (this.Items[index] as TodoItem).content = text;
+            this.RefreshItem(index);
+            return this;
         }
 
         public bool GetItemChecked(int index)
