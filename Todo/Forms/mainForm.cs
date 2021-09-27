@@ -282,7 +282,10 @@ namespace Todo
             if (e.Button == MouseButtons.Left)
             {
                 clickedIndex = this.checkedListBox.IndexFromPoint(e.Location);
-                clickedBox = this.checkedListBox.GetCheckBoxRect(clickedIndex).Contains(e.Location);
+                if (clickedIndex >= 0 && clickedIndex < this.checkedListBox.Items.Count)
+                {
+                    clickedBox = this.checkedListBox.GetCheckBoxRect(clickedIndex).Contains(e.Location);
+                }
             }
 
             if (clickedIndex != -1 && clickedBox)
@@ -297,7 +300,10 @@ namespace Todo
             if (e.Button == MouseButtons.Left)
             {
                 clickedIndex = this.checkedListBox.IndexFromPoint(e.Location);
-                clickedBox = this.checkedListBox.GetCheckBoxRect(clickedIndex).Contains(e.Location);
+                if (clickedIndex >= 0 && clickedIndex < this.checkedListBox.Items.Count)
+                {
+                    clickedBox = this.checkedListBox.GetCheckBoxRect(clickedIndex).Contains(e.Location);
+                }
             }
 
             if (clickedIndex != -1 && !clickedBox)
